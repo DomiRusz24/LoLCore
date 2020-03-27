@@ -1,0 +1,5 @@
+name: LoLCore
+version: ${project.version}
+main: pl.domirusz24.project.lol.lolcore.lolcore.LoLCore
+authors: [DomiRusz24]
+description: LoLCore by DomiRusz24. Brings League of Legends to minecraft.
