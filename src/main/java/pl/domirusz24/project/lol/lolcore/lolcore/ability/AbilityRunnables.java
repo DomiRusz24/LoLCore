@@ -4,9 +4,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import pl.domirusz24.project.lol.lolcore.lolcore.LoLCore;
 import pl.domirusz24.project.lol.lolcore.lolcore.champion.PlayerChampionInfo;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class AbilityRunnables {
     public void startAbilityRunnables() {
         new BukkitRunnable() {
@@ -19,7 +16,7 @@ public class AbilityRunnables {
                     for(LoLAbility ability : info.champion.abilities()) {
                         if(ability.passiveRunnableTick() != 0) {
                             if(i % ability.passiveRunnableTick() == 0) {
-                                ability.passive(info, null);
+                                ability.passive(info);
                             }
                         }
                     }

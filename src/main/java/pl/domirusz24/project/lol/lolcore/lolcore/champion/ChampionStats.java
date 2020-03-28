@@ -2,7 +2,6 @@ package pl.domirusz24.project.lol.lolcore.lolcore.champion;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import pl.domirusz24.project.lol.lolcore.lolcore.LoLCore;
-import pl.domirusz24.project.lol.lolcore.lolcore.ability.NumberConfig;
 
 public class ChampionStats {
     Champion champion;
@@ -20,6 +19,6 @@ public class ChampionStats {
     public double MRDeafult = 0;
     public ChampionStats(Champion champion) {
         this.champion = champion;
-        configPath = "Champions." + champion.Name() + ".basestats.";
+        this.configPath = "Champions." + champion.Name() + ".basestats.";
     }
 }

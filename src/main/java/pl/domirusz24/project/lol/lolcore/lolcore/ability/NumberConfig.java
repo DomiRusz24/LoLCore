@@ -1,39 +1,74 @@
 package pl.domirusz24.project.lol.lolcore.lolcore.ability;
 
+import org.bukkit.configuration.file.FileConfiguration;
 import pl.domirusz24.project.lol.lolcore.lolcore.LoLCore;
 import pl.domirusz24.project.lol.lolcore.lolcore.champion.PlayerChampionInfo;
 
-import java.util.ArrayList;
-import java.util.Objects;
-
 public class NumberConfig {
-    public Double[] levelAmount;
-    public LoLAbility ability;
+    public ChampionDamage[] levelAmount; // DMG amount every lvl
+    public LoLAbility ability; // Ability
     public String configPath;
-    public AbilityScaling abilityScaling;
-    public String type;
-    public NumberConfig(LoLAbility ability, Double[] levels, String type) {
+    public AbilityScaling abilityScaling; // Ability Scaling
+    public String type; // Ability type (HEAL, DMG, STUN etc.)
+    public NumberConfig(LoLAbility ability, ChampionDamage[] levels, String type) {
         this.ability = ability;
         this.levelAmount = levels;
         this.type = type;
         configPath = "Champions." + ability.champion().Name() + ".ability." + ability.bind().toString().toUpperCase() + "." + type + ".";
         abilityScaling = new AbilityScaling(this);
     }
-    double getValue(PlayerChampionInfo player) {
-        double playerStatsModifier = player.ad * abilityScaling.getADScaling + player.ap * abilityScaling.getAPScaling + player.hp * abilityScaling.getHPScaling + player.armor * abilityScaling.getArmorScaling + player.mr * abilityScaling.getMRScaling;
+
+
+    ChampionDamage getDMGValue(PlayerChampionInfo player) {
+        FileConfiguration config = LoLCore.getInstance().getConfig();
+        ChampionDamage abilityDMG;
+        int playerlvl;
+        String DMGConfigPath;
+        double apDMG;
+        double adDMG;
+        double trueDMG;
         switch (ability.bind().toString().toUpperCase()) {
             case "Q":
-                return levelAmount[player.QLevel - 1] + playerStatsModifier;
+                playerlvl = player.QLevel;
+                DMGConfigPath = configPath + "level." + (playerlvl+1) +  ".";
+                abilityDMG = new ChampionDamage(config.getDouble(DMGConfigPath + "AP"), config.getDouble(DMGConfigPath + "AD"), config.getDouble(DMGConfigPath + "TrueDMG"));
+                apDMG = abilityDMG.ap * abilityScaling.getAPScaling * abilityScaling.getArmorScaling;
+                adDMG = abilityDMG.ad * abilityScaling.getADScaling  * abilityScaling.getMRScaling;
+                trueDMG = abilityDMG.trueDMG;
+                break;
             case "W":
-                return levelAmount[player.WLevel - 1] + playerStatsModifier;
+                playerlvl = player.WLevel;
+                DMGConfigPath = configPath + "level." + (playerlvl+1) +  ".";
+                abilityDMG = new ChampionDamage(config.getDouble(DMGConfigPath + "AP"), config.getDouble(DMGConfigPath + "AD"), config.getDouble(DMGConfigPath + "TrueDMG"));
+                apDMG = abilityDMG.ap * abilityScaling.getAPScaling * abilityScaling.getArmorScaling;
+                adDMG = abilityDMG.ad * abilityScaling.getADScaling  * abilityScaling.getMRScaling;
+                trueDMG = abilityDMG.trueDMG;
+                break;
             case "E":
-                return levelAmount[player.ELevel - 1] + playerStatsModifier;
+                playerlvl = player.ELevel;
+                DMGConfigPath = configPath + "level." + (playerlvl+1) +  ".";
+                abilityDMG = new ChampionDamage(config.getDouble(DMGConfigPath + "AP"), config.getDouble(DMGConfigPath + "AD"), config.getDouble(DMGConfigPath + "TrueDMG"));
+                apDMG = abilityDMG.ap * abilityScaling.getAPScaling * abilityScaling.getArmorScaling;
+                adDMG = abilityDMG.ad * abilityScaling.getADScaling  * abilityScaling.getMRScaling;
+                trueDMG = abilityDMG.trueDMG;
+                break;
             case "R":
-                return levelAmount[player.RLevel - 1] + playerStatsModifier;
+                playerlvl = player.RLevel;
+                DMGConfigPath = configPath + "level." + (playerlvl+1) +  ".";
+                abilityDMG = new ChampionDamage(config.getDouble(DMGConfigPath + "AP"), config.getDouble(DMGConfigPath + "AD"), config.getDouble(DMGConfigPath + "TrueDMG"));
+                apDMG = abilityDMG.ap * abilityScaling.getAPScaling * abilityScaling.getArmorScaling;
+                adDMG = abilityDMG.ad * abilityScaling.getADScaling  * abilityScaling.getMRScaling;
+                trueDMG = abilityDMG.trueDMG;
+                break;
             default:
-                return 0;
+                return null;
         }
-
+        ChampionDamage DMG = new ChampionDamage(apDMG, adDMG, trueDMG);
+        DMG.armorPEN = player.armorpen;
+        DMG.magicPEN = player.magicpen;
+        DMG.lethality = player.lethality;
+        DMG.magciflatPen = player.magicpenflat;
+        return DMG;
     }
 
 }

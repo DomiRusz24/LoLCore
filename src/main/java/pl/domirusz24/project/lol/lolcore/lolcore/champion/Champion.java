@@ -3,13 +3,12 @@ package pl.domirusz24.project.lol.lolcore.lolcore.champion;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import pl.domirusz24.project.lol.lolcore.lolcore.LoLCore;
+import pl.domirusz24.project.lol.lolcore.lolcore.ability.ChampionDamage;
 import pl.domirusz24.project.lol.lolcore.lolcore.ability.LoLAbility;
 import pl.domirusz24.project.lol.lolcore.lolcore.ability.NumberConfig;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public abstract class Champion {
     public static ArrayList<Champion> avaibleChampions = new ArrayList<>();
@@ -62,17 +61,19 @@ public abstract class Champion {
         for(Champion champion : avaibleChampions) {
             FileConfiguration config = LoLCore.getInstance().getConfig();
             for(int i = 0; i < champion.stats().length; i++) {
-                config.addDefault("Champion." + champion.Name() + ".stats.level." + i+1 + ".AD", champion.stats()[i].ADDeafult);
-                config.addDefault("Champion." + champion.Name() + ".stats.level." + i+1 + ".AP", champion.stats()[i].APDeafult );
-                config.addDefault("Champion." + champion.Name() + ".stats.level." + i+1 + ".HP", champion.stats()[i].HPDeafult);
-                config.addDefault("Champion." + champion.Name() + ".stats.level." + i+1 + ".Armor", champion.stats()[i].ArmorDeafult);
-                config.addDefault("Champion." + champion.Name() + ".stats.level." + i+1 + ".MR", champion.stats()[i].MRDeafult);
+                config.addDefault("Champion." + champion.Name() + ".stats.level." + (i+1) + ".AD", champion.stats()[i].ADDeafult);
+                config.addDefault("Champion." + champion.Name() + ".stats.level." + (i+1) + ".AP", champion.stats()[i].APDeafult );
+                config.addDefault("Champion." + champion.Name() + ".stats.level." + (i+1) + ".HP", champion.stats()[i].HPDeafult);
+                config.addDefault("Champion." + champion.Name() + ".stats.level." + (i+1) + ".Armor", champion.stats()[i].ArmorDeafult);
+                config.addDefault("Champion." + champion.Name() + ".stats.level." + (i+1) + ".MR", champion.stats()[i].MRDeafult);
             }
             for(LoLAbility ability : champion.abilities()) {
                 for(NumberConfig number : ability.numberConfig()) {
                     for (int i = 0; i < number.levelAmount.length; i++) {
-                        Double amount = number.levelAmount[i];
-                        config.addDefault(number.configPath + "level." + i+1, amount);
+                        ChampionDamage amount = number.levelAmount[i];
+                        config.addDefault(number.configPath + "level." + (i+1) + ".AD", amount.ad);
+                        config.addDefault(number.configPath + "level." + (i+1) + ".AP", amount.ap);
+                        config.addDefault(number.configPath + "level." + (i+1) + ".TrueDMG", amount.trueDMG);
                     }
                     config.addDefault(number.configPath + "scaling.ADScaling.", number.abilityScaling.ADScalingDeafult);
                     config.addDefault(number.configPath + "scaling.APScaling.", number.abilityScaling.APScalingDeafult);
