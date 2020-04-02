@@ -6,27 +6,27 @@ import pl.domirusz24.project.lol.lolcore.lolcore.champion.PlayerChampionInfo;
 
 import java.util.ArrayList;
 
-public abstract class LoLAbility {
-    public abstract Champion champion(); // Champion class
+public interface LoLAbility {
+    Champion champion(); // Champion class
 
-    public abstract String name(); // Ability name
+    String name(); // Ability name
 
-    public abstract ArrayList<String> description(); // Ability desc
+    ArrayList<String> description(); // Ability desc
 
-    public abstract Character bind(); // Ability bind (Q, W, E, R)
+    Character bind(); // Ability bind (Q, W, E, R)
 
-    public abstract ItemStack icon(); // Ability icon (GUI Soon)
+    ItemStack icon(); // Ability icon (GUI Soon)
 
-    public abstract NumberConfig cooldown(); // Ability active CD (SET NUMBER CONFIG TYPE TO "CoolDown"
+    NumberConfig cooldown(); // Ability active CD (SET NUMBER CONFIG TYPE TO "CoolDown")
 
-    public abstract ArrayList<NumberConfig> numberConfig(); // Ability values (DMG, HEAL, STUN etc.)
+    ArrayList<NumberConfig> numberConfig(); // Ability values (DMG, HEAL, STUN etc.)
 
-    public abstract void active(PlayerChampionInfo playerChampionInfo); // Ability (Use numberConfig as values)
+    void active(PlayerChampionInfo playerChampionInfo); // Ability (Use numberConfig as values)
 
-    public abstract int passiveRunnableTick(); // Optional. How often activate passive (Tick) (If none, set it to 0)
+    int passiveRunnableTick(); // Optional. How often activate passive (Tick) (If none, set it to 0)
 
-    public abstract int passiveEvent(); // Optional. Activate passive when event (Event) (If none, set it to null)
+    int passiveEvent(); // Optional. Activate passive when event (Event) (If none, set it to null)
 
-    public abstract void passive(PlayerChampionInfo playerChampionInfo); // Optional. Passive.
+    void passive(PlayerChampionInfo playerChampionInfo); // Optional. Passive.
 
 }

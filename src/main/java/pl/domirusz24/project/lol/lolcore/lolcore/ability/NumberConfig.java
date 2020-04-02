@@ -19,7 +19,7 @@ public class NumberConfig {
     }
 
 
-    ChampionDamage getDMGValue(PlayerChampionInfo player) {
+    ChampionDamage getValue(PlayerChampionInfo player) {
         FileConfiguration config = LoLCore.getInstance().getConfig();
         ChampionDamage abilityDMG;
         int playerlvl;

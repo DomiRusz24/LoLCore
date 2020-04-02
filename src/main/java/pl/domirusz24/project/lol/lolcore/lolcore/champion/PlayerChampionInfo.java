@@ -12,6 +12,8 @@ public class PlayerChampionInfo {
     int level = 1;
     public int avaibleLevelUps = 1;
     public boolean inAbility = false;
+    public boolean dead = false;
+    public int CDR = 0;
     public int EXP = 0;
     public int QLevel = 0;
     public int WLevel = 0;
@@ -56,7 +58,7 @@ public class PlayerChampionInfo {
         double apDMG = 100*(damage.ap) / (100+this.mr-(this.mr * damage.magicPEN)- damage.magciflatPen);
         this.hp = hp - adDMG - apDMG - damage.trueDMG;
         if(this.hp < 0) {
-            this.player.sendMessage("ded");
+            this.player.kickPlayer("Zginales noobie");
         }
     }
 }
