@@ -1,32 +1,52 @@
 package pl.domirusz24.project.lol.lolcore.lolcore.ability;
 
 import org.bukkit.inventory.ItemStack;
+import pl.domirusz24.project.lol.lolcore.lolcore.ability.interfaces.ActiveAbility;
+import pl.domirusz24.project.lol.lolcore.lolcore.ability.interfaces.PassiveAbility;
 import pl.domirusz24.project.lol.lolcore.lolcore.champion.Champion;
 import pl.domirusz24.project.lol.lolcore.lolcore.champion.PlayerChampionInfo;
 
 import java.util.ArrayList;
 
-public interface LoLAbility {
-    Champion champion(); // Champion class
+public abstract class LoLAbility {
 
-    String name(); // Ability name
+    public static ArrayList<ActiveAbility> activeAbilites = new ArrayList<>();
+    public static ArrayList<PassiveAbility> passiveAbilities = new ArrayList<>();
 
-    ArrayList<String> description(); // Ability desc
+    public LoLAbility() {
+        if(this instanceof PassiveAbility) {
+            LoLAbility.passiveAbilities.add((PassiveAbility) this);
+        }
+        if(this instanceof ActiveAbility) {
+            LoLAbility.activeAbilites.add((ActiveAbility) this);
+        }
+    }
 
-    Character bind(); // Ability bind (Q, W, E, R)
+    public abstract Champion champion(); // Champion class
 
-    ItemStack icon(); // Ability icon (GUI Soon)
+    public abstract String name(); // Ability name
 
-    NumberConfig cooldown(); // Ability active CD (SET NUMBER CONFIG TYPE TO "CoolDown")
+    public abstract ArrayList<String> description(); // Ability desc
 
-    ArrayList<NumberConfig> numberConfig(); // Ability values (DMG, HEAL, STUN etc.)
+    public abstract Character bind(); // Ability bind (Q, W, E, R)
 
-    void active(PlayerChampionInfo playerChampionInfo); // Ability (Use numberConfig as values)
+    public abstract ItemStack icon(); // Ability icon (GUI Soon)
 
-    int passiveRunnableTick(); // Optional. How often activate passive (Tick) (If none, set it to 0)
+    public abstract ArrayList<NumberConfig> numberConfig(); // Ability values (DMG, HEAL, STUN etc.)
 
-    int passiveEvent(); // Optional. Activate passive when event (Event) (If none, set it to null)
+    public abstract PassiveAbility[] passives();
 
-    void passive(PlayerChampionInfo playerChampionInfo); // Optional. Passive.
+    public void runActiveAbility(PlayerChampionInfo playerChampionInfo) {
+        if(this instanceof ActiveAbility) {
+            ((ActiveAbility) this).active(playerChampionInfo);
+        }
+    }
+
+    public void runPassiveAbility(PlayerChampionInfo playerChampionInfo) {
+        if(this instanceof PassiveAbility) {
+            ((PassiveAbility) this).passive(playerChampionInfo);
+        }
+
+    }
 
 }

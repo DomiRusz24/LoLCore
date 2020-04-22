@@ -13,6 +13,10 @@ import java.util.ArrayList;
 public abstract class Champion {
     public static ArrayList<Champion> avaibleChampions = new ArrayList<>();
 
+    public Champion() {
+        Champion.avaibleChampions.add(this);
+    }
+
     public abstract String Name(); // Champion name
 
     public abstract String Description(); // Champion description

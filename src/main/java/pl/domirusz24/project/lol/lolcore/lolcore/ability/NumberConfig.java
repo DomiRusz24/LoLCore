@@ -2,15 +2,16 @@ package pl.domirusz24.project.lol.lolcore.lolcore.ability;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import pl.domirusz24.project.lol.lolcore.lolcore.LoLCore;
+import pl.domirusz24.project.lol.lolcore.lolcore.ability.enums.AbilityNumberType;
 import pl.domirusz24.project.lol.lolcore.lolcore.champion.PlayerChampionInfo;
 
 public class NumberConfig {
-    public ChampionDamage[] levelAmount; // DMG amount every lvl
-    public LoLAbility ability; // Ability
-    public String configPath;
-    public AbilityScaling abilityScaling; // Ability Scaling
-    public String type; // Ability type (HEAL, DMG, STUN etc.)
-    public NumberConfig(LoLAbility ability, ChampionDamage[] levels, String type) {
+    public final ChampionDamage[] levelAmount; // DMG amount every lvl
+    public final LoLAbility ability; // Ability
+    public final String configPath;
+    public final AbilityScaling abilityScaling; // Ability Scaling
+    public final AbilityNumberType type; // Ability type (HEAL, DMG, STUN etc.)
+    public NumberConfig(LoLAbility ability, ChampionDamage[] levels, AbilityNumberType type) {
         this.ability = ability;
         this.levelAmount = levels;
         this.type = type;

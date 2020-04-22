@@ -17,25 +17,25 @@ public class AbilityListener implements Listener {
                             switch (ability.bind().toString().toUpperCase()) {
                                 case "Q":
                                     if (info.QLevel != 0) {
-                                        ability.active(info);
+                                        ability.runActiveAbility(info);
                                         info.inAbility = true;
                                     }
                                     break;
                                 case "W":
                                     if (info.WLevel != 0) {
-                                        ability.active(info);
+                                        ability.runActiveAbility(info);
                                         info.inAbility = true;
                                     }
                                     break;
                                 case "E":
                                     if (info.ELevel != 0) {
-                                        ability.active(info);
+                                        ability.runActiveAbility(info);
                                         info.inAbility = true;
                                     }
                                     break;
                                 case "R":
                                     if (info.RLevel != 0) {
-                                        ability.active(info);
+                                        ability.runActiveAbility(info);
                                         info.inAbility = true;
                                     }
                                     break;
